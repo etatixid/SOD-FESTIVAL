@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Festival Event</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+scroll-behavior:smooth;
+}
+
+body{
+font-family:'Poppins',sans-serif;
+background:
+linear-gradient(rgba(107,33,168,.82),rgba(88,28,135,.88)),
+url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1200&auto=format&fit=crop');
+background-size:cover;
+background-attachment:fixed;
+color:white;
+overflow-x:hidden;
+}
+
+body::before{
+content:'';
+position:fixed;
+inset:0;
+background-image:
+radial-gradient(rgba(255,255,255,.08) 1px, transparent 1px);
+background-size:4px 4px;
+pointer-events:none;
+z-index:0;
+}
+
+header{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+z-index:999;
+padding:20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+backdrop-filter:blur(12px);
+background:rgba(0,0,0,.15);
+}
+
+.logo{
+height:55px;
+}
+
+.menu-btn{
+font-size:35px;
+cursor:pointer;
+user-select:none;
+}
+
+.hero{
+min-height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:120px 20px;
+position:relative;
+z-index:1;
+}
+
+.hero img.hero-logo{
+width:min(90%,650px);
+animation:float 4s ease-in-out infinite;
+}
+
+@keyframes float{
+0%,100%{transform:translateY(0);}
+50%{transform:translateY(-12px);}
+}
+
+.hero p{
+font-size:18px;
+letter-spacing:2px;
+margin-bottom:15px;
+}
+
+.section{
+padding:90px 20px;
+max-width:1200px;
+margin:auto;
+position:relative;
+z-index:1;
+}
+
+.title{
+font-family:'Anton',sans-serif;
+font-size:60px;
+text-align:center;
+letter-spacing:3px;
+margin-bottom:40px;
+}
+
+/* ==================== COUNTDOWN ==================== */
+.countdown-box{
+background:#0b67c2;
+padding:30px;
+border-radius:25px;
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:20px;
+text-align:center;
+box-shadow:0 15px 40px rgba(0,0,0,.3);
+}
+
+.time{
+font-size:55px;
+font-weight:800;
+}
+
+.label{
+font-size:14px;
+letter-spacing:1px;
+}
+
+.event-info{
+text-align:center;
+margin-top:25px;
+font-size:22px;
+font-weight:700;
+}
+
+/* ==================== FEATURED SALE CARD ==================== */
+.featured-sale-wrapper{
+display:flex;
+justify-content:center;
+margin-bottom:50px;
+}
+
+.featured-sale-card{
+width:380px;
+max-width:100%;
+border-radius:24px;
+overflow:hidden;
+box-shadow:
+0 25px 60px rgba(0,0,0,.45),
+0 0 60px rgba(255,107,61,.15);
+position:relative;
+z-index:2;
+}
+
+.sale-card-top{
+background:#FFFFFF;
+padding:32px 28px 22px;
+text-align:center;
+position:relative;
+}
+
+.sale-badge{
+display:inline-block;
+background:linear-gradient(135deg,#FF6B00,#FF8C33);
+color:#fff;
+font-size:10px;
+font-weight:700;
+letter-spacing:.15em;
+padding:5px 16px;
+border-radius:50px;
+margin-bottom:14px;
+text-transform:uppercase;
+}
+
+.sale-title{
+font-size:26px;
+font-weight:900;
+color:#1a1a2e;
+letter-spacing:-.02em;
+line-height:1.15;
+margin-bottom:4px;
+}
+
+.sale-subtitle{
+font-size:11px;
+font-weight:600;
+color:#999;
+letter-spacing:.08em;
+text-transform:uppercase;
+}
+
+.sale-separator{
+border:none;
+border-top:2.5px dashed #e0e0e0;
+margin:0;
+position:relative;
+}
+
+.sale-separator::before,
+.sale-separator::after{
+content:'';
+position:absolute;
+top:50%;
+transform:translateY(-50%);
+width:28px;
+height:28px;
+background:linear-gradient(160deg,#6B21A8 0%,#581C87 100%);
+border-radius:50%;
+}
+
+.sale-separator::before{left:-14px;}
+.sale-separator::after{right:-14px;}
+
+.sale-card-bottom{
+background:linear-gradient(180deg,#FF7A1A 0%,#F26500 100%);
+padding:24px 28px 28px;
+text-align:center;
+}
+
+.sale-pass-item{
+margin-bottom:16px;
+padding-bottom:16px;
+border-bottom:1px solid rgba(255,255,255,.2);
+}
+
+.sale-pass-item:last-of-type{
+margin-bottom:20px;
+padding-bottom:0;
+border-bottom:none;
+}
+
+.sale-pass-name{
+font-size:18px;
+font-weight:800;
+color:#fff;
+letter-spacing:.04em;
+text-transform:uppercase;
+margin-bottom:4px;
+}
+
+.sale-pass-price{
+font-size:22px;
+font-weight:900;
+color:#fff;
+letter-spacing:-.01em;
+}
+
+.sale-pass-price span{
+font-size:13px;
+font-weight:600;
+opacity:.85;
+margin-right:2px;
+}
+
+.sale-pass-name.daily{
+font-size:15px;
+font-weight:700;
+opacity:.9;
+}
+
+.sale-buy-btn{
+display:block;
+width:100%;
+padding:16px;
+background:#FFFFFF;
+color:#F26500;
+font-family:'Poppins',sans-serif;
+font-size:14px;
+font-weight:800;
+letter-spacing:.12em;
+text-transform:uppercase;
+border:none;
+border-radius:14px;
+cursor:pointer;
+transition:all .25s ease;
+box-shadow:0 4px 20px rgba(0,0,0,.15);
+margin-bottom:16px;
+text-decoration:none;
+text-align:center;
+}
+
+.sale-buy-btn:hover{
+transform:translateY(-2px);
+box-shadow:0 8px 30px rgba(0,0,0,.25);
+background:#FFF8F0;
+}
+
+.sale-buy-btn:active{
+transform:translateY(0);
+}
+
+.sale-availability{
+display:flex;
+align-items:center;
+justify-content:center;
+gap:8px;
+}
+
+.green-dot{
+width:10px;
+height:10px;
+background:#00E676;
+border-radius:50%;
+display:inline-block;
+box-shadow:0 0 8px rgba(0,230,118,.6);
+animation:pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot{
+0%,100%{box-shadow:0 0 8px rgba(0,230,118,.6);}
+50%{box-shadow:0 0 18px rgba(0,230,118,.9);}
+}
+
+.sale-avail-text{
+font-size:12px;
+font-weight:700;
+color:#fff;
+letter-spacing:.15em;
+text-transform:uppercase;
+}
+
+/* ==================== TICKET GRID ==================== */
+.ticket-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:30px;
+}
+
+.ticket{
+border-radius:30px;
+overflow:hidden;
+box-shadow:0 20px 40px rgba(0,0,0,.25);
+transition:.4s;
+}
+
+.ticket:hover{
+transform:translateY(-10px);
+}
+
+.ticket-head{
+background:#fff;
+color:#ff6433;
+padding:25px;
+font-size:32px;
+font-weight:800;
+}
+
+.ticket-body{
+padding:40px;
+text-align:center;
+}
+
+.orange{background:#ff6b3d;}
+.green{background:#09b57b;}
+.blue{background:#145bc8;}
+
+.price{
+font-size:55px;
+font-weight:800;
+margin-bottom:20px;
+}
+
+.buy-btn{
+display:inline-block;
+padding:16px 40px;
+border-radius:15px;
+background:white;
+color:#111;
+text-decoration:none;
+font-weight:700;
+transition:.3s;
+}
+
+.buy-btn:hover{
+transform:scale(1.05);
+box-shadow:0 8px 25px rgba(0,0,0,.3);
+}
+
+/* ==================== SPOTIFY ==================== */
+.spotify{
+background:rgba(0,0,0,.25);
+backdrop-filter:blur(10px);
+padding:40px;
+border-radius:30px;
+}
+
+/* ==================== GALLERY ==================== */
+.gallery{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:25px;
+}
+
+.gallery img{
+width:100%;
+height:380px;
+object-fit:cover;
+border-radius:25px;
+transition:.4s;
+}
+
+.gallery img:hover{
+transform:scale(1.05);
+}
+
+/* ==================== ABOUT ==================== */
+.about-box{
+background:rgba(0,0,0,.25);
+padding:40px;
+border-radius:30px;
+border:3px solid rgba(255,255,255,.2);
+text-align:center;
+line-height:1.9;
+}
+
+/* ==================== CONTACT ==================== */
+.contact{
+text-align:center;
+}
+
+.contact a{
+color:#ffd966;
+text-decoration:none;
+display:block;
+margin:10px 0;
+transition:.3s;
+}
+
+.contact a:hover{
+color:#ffe699;
+text-decoration:underline;
+}
+
+/* ==================== FOOTER ==================== */
+.footer{
+text-align:center;
+padding:60px 20px;
+font-size:14px;
+position:relative;
+z-index:1;
+}
+
+/* ==================== SCROLL TOP ==================== */
+.scrolltop{
+position:fixed;
+right:20px;
+bottom:20px;
+width:65px;
+height:65px;
+border:none;
+border-radius:50%;
+font-size:28px;
+cursor:pointer;
+background:linear-gradient(45deg,#ff56ff,#8a2be2);
+color:white;
+box-shadow:0 10px 30px rgba(0,0,0,.4);
+z-index:998;
+transition:.3s;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.scrolltop:hover{
+transform:translateY(-3px);
+box-shadow:0 14px 35px rgba(0,0,0,.5);
+}
+
+/* ==================== TOAST ==================== */
+.toast{
+position:fixed;
+bottom:40px;
+left:50%;
+transform:translateX(-50%) translateY(100px);
+background:rgba(0,0,0,.88);
+color:#fff;
+padding:14px 28px;
+border-radius:12px;
+font-family:'Poppins',sans-serif;
+font-size:14px;
+font-weight:600;
+z-index:9999;
+opacity:0;
+transition:all .4s cubic-bezier(.16,1,.3,1);
+pointer-events:none;
+backdrop-filter:blur(10px);
+border:1px solid rgba(255,255,255,.1);
+white-space:nowrap;
+}
+
+.toast.show{
+opacity:1;
+transform:translateX(-50%) translateY(0);
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media(max-width:768px){
+
+.title{
+font-size:42px;
+}
+
+.countdown-box{
+grid-template-columns:repeat(2,1fr);
+}
+
+.time{
+font-size:40px;
+}
+
+.price{
+font-size:40px;
+}
+
+.featured-sale-card{
+width:340px;
+}
+
+.sale-title{
+font-size:22px;
+}
+
+.sale-pass-name{
+font-size:16px;
+}
+
+.sale-pass-price{
+font-size:20px;
+}
+
+.gallery img{
+height:260px;
+}
+
+}
+
+@media(max-width:400px){
+
+.featured-sale-card{
+width:300px;
+}
+
+.sale-card-top{
+padding:24px 20px 18px;
+}
+
+.sale-card-bottom{
+padding:20px 20px 24px;
+}
+
+.sale-title{
+font-size:20px;
+}
+
+}
+
+</style>
+</head>
+<body>
+
+<header>
+
+<img src="logo.png" class="logo" alt="Logo">
+
+<div class="menu-btn" id="menuBtn" aria-label="Menu">☰</div>
+
+</header>
+
+<!-- ==================== HERO ==================== -->
+<section class="hero">
+
+<p>A FESTIVAL EXPERIENCE</p>
+
+<img src="gambar.png" class="hero-logo" alt="Hero Logo">
+
+</section>
+
+<!-- ==================== COUNTDOWN ==================== -->
+<section class="section">
+
+<h2 class="title">MENUJU EVENT</h2>
+
+<div class="countdown-box">
+
+<div>
+<div id="days" class="time">00</div>
+<div class="label">HARI</div>
+</div>
+
+<div>
+<div id="hours" class="time">00</div>
+<div class="label">JAM</div>
+</div>
+
+<div>
+<div id="minutes" class="time">00</div>
+<div class="label">MENIT</div>
+</div>
+
+<div>
+<div id="seconds" class="time">00</div>
+<div class="label">DETIK</div>
+</div>
+
+</div>
+
+<div class="event-info">
+1 & 2 AGUSTUS 2026 | INDONESIA
+</div>
+
+</section>
+
+<!-- ==================== TICKETS ==================== -->
+<section class="section">
+
+<h2 class="title">TICKETS</h2>
+
+<!-- Featured Sale Card -->
+<div class="featured-sale-wrapper">
+<div class="featured-sale-card">
+
+<div class="sale-card-top">
+<div class="sale-badge">🔥 Last Chance</div>
+<div class="sale-title">NORMAL SALE<br>TERAKHIR</div>
+<div class="sale-subtitle">Limited Time Offer</div>
+</div>
+
+<hr class="sale-separator">
+
+<div class="sale-card-bottom">
+<div class="sale-pass-item">
+<div class="sale-pass-name">2 Days Pass</div>
+<div class="sale-pass-price"><span>IDR</span> 395.000</div>
+</div>
+
+<div class="sale-pass-item">
+<div class="sale-pass-name daily">Daily Pass</div>
+</div>
+
+<a href="https://onlinetiketdigital.github.io/FROM-SODFESTIVAL/" class="sale-buy-btn" id="saleBuyBtn">
+BUY TICKET
+</a>
+
+<div class="sale-availability">
+<span class="green-dot"></span>
+<span class="sale-avail-text">AVAILABLE</span>
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- Existing Ticket Grid -->
+<div class="ticket-grid">
+
+<div class="ticket">
+<div class="ticket-head">EARLY BIRD</div>
+<div class="ticket-body orange">
+<div class="price">199K</div>
+<a href="https://onlinetiketdigital.github.io/FROM-SODFESTIVAL/" class="buy-btn">
+BELI TIKET
+</a>
+</div>
+</div>
+
+<div class="ticket">
+<div class="ticket-head">PRESALE 1</div>
+<div class="ticket-body green">
+<div class="price">249K</div>
+<a href="https://onlinetiketdigital.github.io/FROM-SODFESTIVAL/" class="buy-btn">
+BELI TIKET
+</a>
+</div>
+</div>
+
+<div class="ticket">
+<div class="ticket-head">PRESALE 2</div>
+<div class="ticket-body blue">
+<div class="price">299K</div>
+<a href="https://onlinetiketdigital.github.io/FROM-SODFESTIVAL/" class="buy-btn">
+BELI TIKET
+</a>
+</div>
+</div>
+
+</div>
+
+</section>
+
+<!-- ==================== SPOTIFY ==================== -->
+<section class="section">
+
+<h2 class="title">PLAYLIST EVENT</h2>
+
+<div class="spotify">
+
+<iframe style="border-radius:20px"
+src="https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M"
+width="100%"
+height="500"
+frameborder="0"
+allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+loading="lazy">
+</iframe>
+
+</div>
+
+</section>
+
+<!-- ==================== GALLERY ==================== -->
+<section class="section">
+
+<h2 class="title">GALERI</h2>
+
+<div class="gallery">
+
+<img src="galeri1.jpg" alt="Galeri 1" loading="lazy">
+<img src="galeri2.jpg" alt="Galeri 2" loading="lazy">
+<img src="galeri3.jpg" alt="Galeri 3" loading="lazy">
+<img src="galeri4.jpg" alt="Galeri 4" loading="lazy">
+<img src="galeri5.jpg" alt="Galeri 5" loading="lazy">
+<img src="galeri6.jpg" alt="Galeri 6" loading="lazy">
+
+</div>
+
+</section>
+
+<!-- ==================== ABOUT ==================== -->
+<section class="section">
+
+<h2 class="title">ABOUT US</h2>
+
+<div class="about-box">
+
+<p>
+Selamat datang di festival musik dan hiburan terbesar.
+Nikmati pengalaman konser spektakuler, penampilan artis terbaik,
+kuliner, komunitas kreatif, dan berbagai aktivitas menarik lainnya.
+Website ini dibuat dengan konsep modern bertema ungu seperti
+festival profesional masa kini.
+</p>
+
+</div>
+
+</section>
+
+<!-- ==================== CONTACT ==================== -->
+<section class="section contact">
+
+<h2 class="title">HUBUNGI KAMI</h2>
+
+<a href="mailto:hello@email.com">hello@email.com</a>
+<a href="mailto:support@email.com">support@email.com</a>
+
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+
+© 2026 ALL RIGHTS RESERVED
+
+</footer>
+
+<!-- ==================== SCROLL TOP ==================== -->
+<button class="scrolltop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Scroll to top">
+↑
+</button>
+
+<!-- ==================== TOAST ==================== -->
+<div class="toast" id="toast"></div>
+
+<!-- ==================== SCRIPTS ==================== -->
+<script>
+
+(function(){
+
+"use strict";
+
+/* ---------- Countdown Timer ---------- */
+const countDownDate = new Date("Aug 1, 2026 00:00:00").getTime();
+
+const daysEl    = document.getElementById("days");
+const hoursEl   = document.getElementById("hours");
+const minutesEl = document.getElementById("minutes");
+const secondsEl = document.getElementById("seconds");
+
+function updateCountdown(){
+  const now = new Date().getTime();
+  const distance = countDownDate - now;
+
+  if(distance < 0){
+    daysEl.innerHTML    = "00";
+    hoursEl.innerHTML   = "00";
+    minutesEl.innerHTML = "00";
+    secondsEl.innerHTML = "00";
+    return;
+  }
+
+  daysEl.innerHTML    = String(Math.floor(distance / (1000*60*60*24))).padStart(2,"0");
+  hoursEl.innerHTML   = String(Math.floor((distance % (1000*60*60*24)) / (1000*60*60))).padStart(2,"0");
+  minutesEl.innerHTML = String(Math.floor((distance % (1000*60*60)) / (1000*60))).padStart(2,"0");
+  secondsEl.innerHTML = String(Math.floor((distance % (1000*60)) / 1000)).padStart(2,"0");
+}
+
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+/* ---------- Toast ---------- */
+const toastEl = document.getElementById("toast");
+let toastTimer = null;
+
+function showToast(message){
+  if(toastTimer) clearTimeout(toastTimer);
+  toastEl.textContent = message;
+  toastEl.classList.add("show");
+  toastTimer = setTimeout(function(){
+    toastEl.classList.remove("show");
+  }, 2500);
+}
+
+/* ---------- Sale Buy Button ---------- */
+const saleBuyBtn = document.getElementById("saleBuyBtn");
+if(saleBuyBtn){
+  saleBuyBtn.addEventListener("click", function(e){
+    e.preventDefault();
+    showToast("🎟️ Mengarahkan ke halaman pembayaran...");
+    setTimeout(function(){
+      window.location.href = saleBuyBtn.href;
+    }, 1200);
+  });
+}
+
+/* ---------- Menu Button (simple toggle placeholder) ---------- */
+const menuBtn = document.getElementById("menuBtn");
+if(menuBtn){
+  menuBtn.addEventListener("click", function(){
+    showToast("📋 Menu segera hadir!");
+  });
+}
+
+/* ---------- Scroll Top Button Visibility ---------- */
+const scrollBtn = document.querySelector(".scrolltop");
+if(scrollBtn){
+  window.addEventListener("scroll", function(){
+    if(window.scrollY > 600){
+      scrollBtn.style.opacity = "1";
+      scrollBtn.style.pointerEvents = "auto";
+    } else {
+      scrollBtn.style.opacity = "0";
+      scrollBtn.style.pointerEvents = "none";
+    }
+  });
+  scrollBtn.style.opacity = "0";
+  scrollBtn.style.pointerEvents = "none";
+  scrollBtn.style.transition = "opacity .3s, transform .3s";
+}
+
+})();
+
+</script>
+
+</body>
+</html>
